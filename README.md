@@ -73,8 +73,10 @@ You can re-edit the config later at:
 ---
 
 ## Monitor
+```bash
 tail -f /opt/popcache/logs/stdout.log
 tail -f /opt/popcache/logs/stderr.log
+```
 
 ### Start/Stop the Node
 ```bash
