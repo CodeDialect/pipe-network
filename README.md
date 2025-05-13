@@ -26,7 +26,7 @@ sudo apt install curl unzip ufw jq git -y
 ### 2. Clone or Download This Repo
 
 ```bash
-git clone https://github.com/<your-username>/pipe-node.git
+git clone https://github.com/CodeDialect/pipe-network.git
 cd pipe-node
 ```
 
