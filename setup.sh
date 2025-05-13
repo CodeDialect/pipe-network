@@ -11,9 +11,25 @@ echo -e "${CYAN}Starting Pipe Network PoP Node Setup...${NC}"
 # === Step 1: Install Dependencies ===
 echo -e "${CYAN}Installing dependencies...${NC}"
 sudo apt update -y && sudo apt upgrade -y
-sudo apt install -y wget curl libssl-dev ca-certificates ufw jq tar gzip net-tools
+sudo apt install -y wget curl libssl-dev ca-certificates ufw jq tar gzip net-tools git
 
-# === Step 1.1: Configure UFW (Smart) ===
+# === Step 1.1: Optimize Network Settings ===
+echo -e "${CYAN}Optimizing network settings for PoP node...${NC}"
+sudo bash -c 'cat > /etc/sysctl.d/99-popcache.conf << EOL
+net.ipv4.ip_local_port_range = 1024 65535
+net.core.somaxconn = 65535
+net.ipv4.tcp_low_latency = 1
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_window_scaling = 1
+net.ipv4.tcp_wmem = 4096 65536 16777216
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.core.wmem_max = 16777216
+net.core.rmem_max = 16777216
+EOL'
+sudo sysctl -p /etc/sysctl.d/99-popcache.conf
+
+# === Step 1.2: Configure UFW ===
 echo -e "${CYAN}Checking UFW firewall...${NC}"
 if ! sudo ufw status | grep -q "Status: active"; then
   echo -e "${YELLOW}UFW is not active. Configuring...${NC}"
