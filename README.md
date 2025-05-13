@@ -116,6 +116,7 @@ Grant permission using:
 
 ```bash
 sudo setcap 'cap_net_bind_service=+ep' /opt/popcache/pop
+sudo kill -9 $(sudo lsof -t -i :80)
 sudo systemctl restart pop
 ```
 
