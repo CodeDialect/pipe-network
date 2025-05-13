@@ -29,8 +29,12 @@ sudo apt install curl unzip ufw jq git -y
 git clone https://github.com/CodeDialect/pipe-network.git
 cd pipe-network
 ```
+### 3. Check your region
+```bash
+curl ipinfo.io
+```
 
-### 3. Run the Setup Script
+### 4. Run the Setup Script
 
 ```bash
 chmod +x setup.sh
