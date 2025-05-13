@@ -135,7 +135,7 @@ if [[ "$CONFIRM" =~ ^[Nn]$ ]]; then
 fi
 
 echo "$CONFIG_JSON" | sudo tee "$WORKDIR/config.json" > /dev/null
-
+sudo mkdir -p /opt/popcache/logs
 # === Step 7: Setup systemd Service ===
 SERVICE_FILE="/etc/systemd/system/pop.service"
 echo -e "${CYAN}Creating systemd service at $SERVICE_FILE...${NC}"
