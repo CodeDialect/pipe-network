@@ -27,7 +27,7 @@ sudo apt install curl unzip ufw jq git -y
 
 ```bash
 git clone https://github.com/CodeDialect/pipe-network.git
-cd pipe-node
+cd pipe-network
 ```
 
 ### 3. Run the Setup Script
