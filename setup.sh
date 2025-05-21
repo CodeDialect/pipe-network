@@ -142,19 +142,24 @@ echo -e "${CYAN}Creating systemd service at $SERVICE_FILE...${NC}"
 
 sudo bash -c "cat > $SERVICE_FILE" <<EOF
 [Unit]
-Description=Pipe Network PoP Node
+Description=POP Cache Node
 After=network.target
 
 [Service]
-ExecStart=$WORKDIR/pop
-WorkingDirectory=$WORKDIR
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/popcache
+ExecStart=/opt/popcache/pop
 Restart=always
-User=$USER
-LimitNOFILE=40960
+RestartSec=5
+LimitNOFILE=65535
+StandardOutput=append:/opt/popcache/logs/stdout.log
+StandardError=append:/opt/popcache/logs/stderr.log
+Environment=POP_CONFIG_PATH=/opt/popcache/config.json
 
 [Install]
 WantedBy=multi-user.target
-EOF
 
 # === Step 8: Enable and Start Service ===
 echo -e "${CYAN}Starting PoP node service...${NC}"
