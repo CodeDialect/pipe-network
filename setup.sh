@@ -160,7 +160,7 @@ Environment=POP_CONFIG_PATH=/opt/popcache/config.json
 
 [Install]
 WantedBy=multi-user.target
-
+EOF
 # === Step 8: Enable and Start Service ===
 echo -e "${CYAN}Starting PoP node service...${NC}"
 sudo systemctl daemon-reexec
