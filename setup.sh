@@ -33,8 +33,8 @@ sudo sysctl -p /etc/sysctl.d/99-popcache.conf
 echo -e "${CYAN}Checking UFW firewall...${NC}"
 if ! sudo ufw status | grep -q "Status: active"; then
   echo -e "${YELLOW}UFW is not active. Configuring...${NC}"
-  sudo ufw allow 443/tcp
-  sudo ufw allow 80/tcp
+  sudo ufw allow 443
+  sudo ufw allow 84
   sudo ufw allow OpenSSH
   sudo ufw --force enable
 else
@@ -97,7 +97,7 @@ CONFIG_JSON=$(cat <<EOF
   "server": {
     "host": "0.0.0.0",
     "port": 443,
-    "http_port": 80,
+    "http_port": 84,
     "workers": $WORKERS
   },
   "cache_config": {
