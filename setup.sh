@@ -30,17 +30,33 @@ EOL'
 sudo sysctl -p /etc/sysctl.d/99-popcache.conf
 
 # === Step 1.2: Configure UFW ===
-echo -e "${CYAN}Checking UFW firewall...${NC}"
+echo -e "${CYAN}Checking UFW firewall status...${NC}"
 if ! sudo ufw status | grep -q "Status: active"; then
-  echo -e "${YELLOW}UFW is not active. Configuring...${NC}"
-  sudo ufw allow 443
-  sudo ufw allow 84
-  sudo ufw allow OpenSSH
+  echo -e "${YELLOW}UFW is not active. Setting up basic rules...${NC}"
+  sudo ufw allow 443/tcp comment 'HTTPS'
+  sudo ufw allow 84/tcp comment 'Custom port 84'
+  sudo ufw allow 84/udp comment 'Custom port 84'
+  sudo ufw allow OpenSSH comment 'Allow SSH access'
   sudo ufw --force enable
   sudo ufw reload
+  echo -e "${GREEN}UFW has been enabled and rules have been applied.${NC}"
 else
-  echo -e "${CYAN}UFW is already active. Skipping firewall config.${NC}"
+  echo -e "${CYAN}UFW is already active. Ensuring required ports are allowed...${NC}"
+  for port in 443 84; do
+    if ! sudo ufw status | grep -qw "$port/tcp"; then
+      echo -e "${YELLOW}Allowing port $port/tcp...${NC}"
+      sudo ufw allow "$port/tcp"
+    fi
+  done
+  if ! sudo ufw status | grep -qw "OpenSSH"; then
+    echo -e "${YELLOW}Allowing OpenSSH...${NC}"
+    sudo ufw allow OpenSSH
+  fi
+  sudo ufw reload
+  echo -e "${GREEN}Required firewall rules are in place and UFW has been reloaded.${NC}"
 fi
+
+
 
 # === Step 2: Setup Directory ===
 WORKDIR="/opt/popcache"
@@ -71,20 +87,20 @@ read -p "Enter your Solana wallet address (solana_pubkey): " SOLANA_PUBKEY
 
 # === Step 5: Performance Settings ===
 echo -e "${CYAN}Default performance settings:${NC}"
-echo -e "  - Workers: 40"
+echo -e "  - Workers: 0"
 echo -e "  - Memory Cache: 4096 MB"
 echo -e "  - Disk Cache: 100 GB"
 read -p "Do you want to override these defaults? [y/N]: " OVERRIDE
 
 if [[ "$OVERRIDE" =~ ^[Yy]$ ]]; then
-  read -p "Enter number of worker threads [default 40]: " WORKERS
+  read -p "Enter number of worker threads [default 0]: " WORKERS
   read -p "Enter memory cache size in MB [default 4096]: " MEM_CACHE_MB
   read -p "Enter disk cache size in GB [default 100]: " DISK_CACHE_GB
-  WORKERS=${WORKERS:-40}
+  WORKERS=${WORKERS:-0}
   MEM_CACHE_MB=${MEM_CACHE_MB:-4096}
   DISK_CACHE_GB=${DISK_CACHE_GB:-100}
 else
-  WORKERS=40
+  WORKERS=0
   MEM_CACHE_MB=4096
   DISK_CACHE_GB=100
 fi
