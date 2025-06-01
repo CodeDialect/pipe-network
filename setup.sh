@@ -37,6 +37,7 @@ if ! sudo ufw status | grep -q "Status: active"; then
   sudo ufw allow 84
   sudo ufw allow OpenSSH
   sudo ufw --force enable
+  sudo ufw reload
 else
   echo -e "${CYAN}UFW is already active. Skipping firewall config.${NC}"
 fi
@@ -53,7 +54,8 @@ echo -e "${CYAN}Downloading PoP binary v0.3.0...${NC}"
 wget -q --show-progress https://download.pipe.network/static/pop-v0.3.1-linux-x64.tar.gz -O pop.tar.gz
 echo -e "${CYAN}Extracting PoP binary...${NC}"
 tar -xzf pop.tar.gz
-chmod +x pop
+chmod +x ./pop
+sudo ln -sf /opt/popcache/pop /usr/local/bin/pop
 
 # === Step 4: Interactive Configuration ===
 read -p "Enter a unique PoP node name (pop_name): " POP_NAME
