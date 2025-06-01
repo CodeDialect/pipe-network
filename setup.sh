@@ -50,7 +50,7 @@ cd "$WORKDIR" || exit 1
 
 # === Step 3: Download and Extract PoP Binary ===
 echo -e "${CYAN}Downloading PoP binary v0.3.0...${NC}"
-wget -q --show-progress https://download.pipe.network/static/pop-v0.3.0-linux-x64.tar.gz -O pop.tar.gz
+wget -q --show-progress https://download.pipe.network/static/pop-v0.3.1-linux-x64.tar.gz -O pop.tar.gz
 echo -e "${CYAN}Extracting PoP binary...${NC}"
 tar -xzf pop.tar.gz
 chmod +x pop
