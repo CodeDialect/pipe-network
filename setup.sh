@@ -34,15 +34,15 @@ echo -e "${CYAN}Checking UFW firewall status...${NC}"
 if ! sudo ufw status | grep -q "Status: active"; then
   echo -e "${YELLOW}UFW is not active. Setting up basic rules...${NC}"
   sudo ufw allow 443/tcp comment 'HTTPS'
-  sudo ufw allow 84/tcp comment 'Custom port 84'
-  sudo ufw allow 84/udp comment 'Custom port 84'
+  sudo ufw allow 8084/tcp comment 'Custom port 8084'
+  sudo ufw allow 8084/udp comment 'Custom port 8084'
   sudo ufw allow OpenSSH comment 'Allow SSH access'
   sudo ufw --force enable
   sudo ufw reload
   echo -e "${GREEN}UFW has been enabled and rules have been applied.${NC}"
 else
   echo -e "${CYAN}UFW is already active. Ensuring required ports are allowed...${NC}"
-  for port in 443 84; do
+  for port in 443 8084; do
     if ! sudo ufw status | grep -qw "$port/tcp"; then
       echo -e "${YELLOW}Allowing port $port/tcp...${NC}"
       sudo ufw allow "$port/tcp"
@@ -115,7 +115,7 @@ CONFIG_JSON=$(cat <<EOF
   "server": {
     "host": "0.0.0.0",
     "port": 443,
-    "http_port": 84,
+    "http_port": 8084,
     "workers": $WORKERS
   },
   "cache_config": {
