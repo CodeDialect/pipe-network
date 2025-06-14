@@ -9,8 +9,8 @@ This guide helps you install and run a PoP (Proof of Processing) node for the [P
 
 - A Linux server (Ubuntu 20.04+)
 - Root or sudo access
-- Open ports: `443`, `8080`, `22` (for SSH)
-- GCP: Ensure firewall rules allow TCP 443 and 8080
+- Open ports: `443`, `8084`, `22` (for SSH)
+- GCP: Ensure firewall rules allow TCP 443 and 8084
 
 ---
 
@@ -106,7 +106,7 @@ sudo journalctl -u pop -f
 
 The script opens:
 - `443/tcp`  PoP API port
-- `8080/tcp`  Optional monitoring or HTTP port
+- `8084/tcp`  Optional monitoring or HTTP port
 
 Verify with:
 
@@ -123,7 +123,7 @@ Grant permission using:
 
 ```bash
 sudo setcap 'cap_net_bind_service=+ep' /opt/popcache/pop
-sudo kill -9 $(sudo lsof -t -i :80)
+sudo kill -9 $(sudo lsof -t -i :8084)
 sudo systemctl restart pop
 ```
 
