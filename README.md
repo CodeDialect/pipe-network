@@ -78,6 +78,11 @@ tail -f /opt/popcache/logs/stdout.log
 tail -f /opt/popcache/logs/stderr.log
 ```
 
+## Check Status
+```bash
+curl -sk http://localhost:8084/metrics | jq . && curl -sk http://localhost:8084/state | jq . && curl -sk http://localhost:8084/health | jq .
+```
+
 ### Start/Stop the Node
 ```bash
 sudo systemctl start pop
