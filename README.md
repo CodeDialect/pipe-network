@@ -67,7 +67,7 @@ These can be obtained from the Pipe Network CLI.
 
 You can re-edit the config later at:
 ```bash
-/opt/popcache/config.json
+nano /opt/popcache/config.json
 ```
 
 ---
