@@ -67,9 +67,12 @@ These can be obtained from the Pipe Network CLI.
 
 You can re-edit the config later at:
 ```bash
-nano /opt/popcache/config.json
+sudo nano /opt/popcache/config.json
 ```
-
+Then Restart node using:
+```bash
+sudo systemctl restart pop
+```
 ---
 
 ## Monitor
