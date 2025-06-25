@@ -83,7 +83,7 @@ tail -f /opt/popcache/logs/stderr.log
 
 ## Check Status
 ```bash
-curl -sk http://localhost:8084/metrics | jq . && curl -sk http://localhost:8084/state | jq . && curl -sk http://localhost:8084/health | jq .
+curl http://localhost:8084/metrics | jq . && curl http://localhost:8084/state | jq . && curl http://localhost:8084/health | jq .
 ```
 
 ### Start/Stop the Node
